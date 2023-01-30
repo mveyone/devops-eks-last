@@ -1,0 +1,35 @@
+---
+- name : "k8s auto build"
+  hosts: all
+  become: true
+  tasks:  
+   - name: delete namespace ninja
+     command: kubectl delete ns ninja
+     ignore_errors: yes    
+
+  #  - name : apply nodejsapp.yml
+  #    command: kubectl apply -f k8s/nodejsapp.yml
+   - name: create namespace ninja
+     command: kubectl create ns ninja
+
+   - name: deploy secret
+     command: kubectl apply -f secret.yml
+     command: sleep 20
+
+   - name: deploy mongo.yml
+     command: kubectl apply -f mongo.yml
+     command: sleep 20
+
+   - name: deploy configmap
+     command: kubectl apply -f configMap.yml
+     command: sleep 20
+
+   - name: deploy mongo-express
+     command: kubectl apply -f mongo-express.yml
+     command: sleep 20
+  
+   - name: deploy k8s/nodejsApp
+     command: kubectl apply -f nodejs.yml
+
+   - name: show all deployments
+     command: kubectl get all -n ninja
