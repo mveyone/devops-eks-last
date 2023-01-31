@@ -69,10 +69,7 @@ pipeline {
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                sh """ 
-                cd k8s/
-                ansible-playbook k8s-playbook.yml 
-                """
+                sh " ansible-playbook k8s-playbook.yml """
                 sleep(time: 120, unit: "SECONDS")
               }
           }
