@@ -49,12 +49,12 @@ pipeline {
             // You will need to install CloudBees AWS Credentials Plugin in Jenkins and add AWS Credentials first 
               withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: "aws-credentials",
+                credentialsId: "  ",
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
                 sh """
-                aws eks update-kubeconfig --name k8s-eks-demo
+                aws eks update-kubeconfig --name k8s-eks
                 """
               }
           }
