@@ -69,7 +69,12 @@ pipeline {
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                sh " kubectl apply -f nodejsapp.yml "
+                sh """ kubectl create ns ninja
+                       kubectl apply -f secret.yml
+                       kubectl apply -f mongo.yml 
+                       kubectl apply -f configMap.yml 
+                       kubectl apply -f mongo-express.yml
+                       kubectl apply -f nodejs.yml """
                 sleep(time: 120, unit: "SECONDS")
               }
           }
