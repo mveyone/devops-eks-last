@@ -24,9 +24,9 @@
             
                 }
         }
-        stage('deploy to eks k8s'){
-            steps{
-                   sh ' ansible-playbook k8s/k8s-playbook.yml'   
-                 }
-        }
+        // stage('deploy to eks k8s'){
+        //     steps{
+        //            sh ' ansible-playbook k8s/k8s-playbook.yml'   
+        //          }
+        // }
     }
