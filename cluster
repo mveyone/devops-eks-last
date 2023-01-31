@@ -1,0 +1,2 @@
+eksctl create cluster --region us-east-1 --name k8s-eks --nodegroup-name worker-node  --nodes 1 --nodes-min 1 nodes-max 1 --node-type t3.small --node-volume-size 30
+

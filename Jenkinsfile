@@ -6,18 +6,16 @@ pipeline {
 	}
     stages {
         stage('Docker Login') {
-            steps {
-                // Add --password-stdin to run docker login command non-interactively
+                         // Add --password-stdin to run docker login command non-interactively
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
+        stage('git checkout'){
+              git branch: 'main', credentialsId: 'github', url: 'https://github.com/mveyone/devops-.git'
         }
-        stage('Build & push Dockerfile') {
-            steps {
-                sh """
-                k8s/ansible-playbook docker-playbook.yml
-                ansible-playbook ansible-dcompose.yml
-                """
-            }
         }
+        // stage('Build & push Dockerfile') {
+        //     steps {
+        //        sh 'ansible-playbook k8s/k8s-playbook.yml'
+        //     }
+        // }
     } 
-}
