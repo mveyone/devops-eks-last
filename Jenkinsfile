@@ -14,7 +14,6 @@ pipeline {
         }
       // First Stage
         stage('docker-login') {
-          // Steps in first stage
             steps {
               // Command to login using dockerhub credentials  
               sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -39,6 +38,11 @@ pipeline {
                    sh '  docker image push mveyone/$JOB_NAME:latest '
                    sh '  docker image rm mveyone/$JOB_NAME:latest  mveyone/$JOB_NAME:v1.$BUILD_ID $JOB_NAME:v1.$BUILD_ID'
                    }
+        }
+        stage('deployment of nodejsapp on eks'){
+          steps{
+            sh 'ansible-playbook k8s/k8s-playbook.yml'
+          }
         }
     }
 }
