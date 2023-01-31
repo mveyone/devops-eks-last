@@ -44,7 +44,6 @@ pipeline {
         //     sh 'ansible-playbook k8s/k8s-playbook.yml'
         //   }
         // }
-    }
         stage('Update Kubeconfig') {
           steps {
             // You will need to install CloudBees AWS Credentials Plugin in Jenkins and add AWS Credentials first 
@@ -78,7 +77,6 @@ pipeline {
               }
           }
       }
-
       stage('Reveal APP URL') {
           steps {
             // You will need to install CloudBees AWS Credentials Plugin in Jenkins and add AWS Credentials first 
@@ -92,4 +90,5 @@ pipeline {
               }
           }
       }
-  }
+    }
+ }
