@@ -69,7 +69,7 @@ pipeline {
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                sh " ansible-playbook k8s-playbook.yml "
+                sh " kubectl apply -f nodejsapp.yml "
                 sleep(time: 120, unit: "SECONDS")
               }
           }
