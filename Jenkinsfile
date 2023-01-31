@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('git checkout'){
           steps{
-          git branch: 'main', credentialsId: 'github', url: 'https://github.com/mveyone/devops-.git'
+          git branch: 'main', credentialsId: 'github', url: 'https://github.com/mveyone/devops-eks-last.git'
           }
         }
       // First Stage
