@@ -39,10 +39,57 @@ pipeline {
                    sh '  docker image rm mveyone/$JOB_NAME:latest  mveyone/$JOB_NAME:v1.$BUILD_ID $JOB_NAME:v1.$BUILD_ID'
                    }
         }
-        stage('deployment of nodejsapp on eks'){
-          steps{
-            sh 'ansible-playbook k8s/k8s-playbook.yml'
-          }
-        }
+        // stage('deployment of nodejsapp on eks'){
+        //   steps{
+        //     sh 'ansible-playbook k8s/k8s-playbook.yml'
+        //   }
+        // }
     }
-}
+        stage('Update Kubeconfig') {
+          steps {
+            // You will need to install CloudBees AWS Credentials Plugin in Jenkins and add AWS Credentials first 
+              withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: "aws-credentials",
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                sh """
+                aws eks update-kubeconfig --name k8s-eks-demo
+                """
+              }
+          }
+      }
+
+      stage('Deploy App') {
+          steps {
+            // You will need to install CloudBees AWS Credentials Plugin in Jenkins and add AWS Credentials first 
+              withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: "aws-credentials",
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                sh """
+                cd k8s
+                ansible-playbook k8s-playbook.yml              
+                """
+                sleep(time: 120, unit: "SECONDS")
+              }
+          }
+      }
+
+      stage('Reveal APP URL') {
+          steps {
+            // You will need to install CloudBees AWS Credentials Plugin in Jenkins and add AWS Credentials first 
+              withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: "aws-credentials",
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                sh "aws elb describe-load-balancers | grep DNSName"
+              }
+          }
+      }
+  }
