@@ -1,0 +1,120 @@
+pipeline {   
+  agent{      
+    node { label 'slavefordocker'}     
+  }  
+  environment {     
+    DOCKERHUB_CREDENTIALS= credentials('dockerhubcredentials')     
+  }    
+  stages {         
+    stage("Git Checkout"){           
+      steps{                
+	git credentialsId: 'github', url: 'https://github.com/githubusername/githubreponame'                 
+	echo 'Git Checkout Completed'            
+      }        
+    }
+    stage('Build Docker Image') {         
+      steps{                
+	sh 'sudo docker build -t dockerhubusername/dockerhubreponame:$BUILD_NUMBER .'           
+        echo 'Build Image Completed'                
+      }           
+    }
+    stage('Login to Docker Hub') {         
+      steps{                            
+	sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                 
+	echo 'Login Completed'                
+      }           
+    }               
+    stage('Push Image to Docker Hub') {         
+      steps{                            
+	sh 'sudo docker push dockerhubusername/dockerhubreponame:$BUILD_NUMBER'                 echo 'Push Image Completed'       
+      }           
+    }      
+  } //stages 
+  post{
+    always {  
+      sh 'docker logout'           
+    }      
+  }  
+} //pipeline
+
+Let us know if you found the post useful.
+
+Related posts:
+
+How to Build A Docker Image and Publish To Docker Hub with Github Actions
+
+SonarQube integration with Jenkins
+
+To read more posts on Jenkins Click here
+
+To read more posts on Docker Click here
+
+You may also like...
+
+    How to access a web application running on a docker container from a web browser or ssh	
+    How to access a web application running on a docker container from a web browser or ssh
+
+    November 6, 2021
+
+     by Saran
+    How to Install SonarQube 9 on windows with tips for troubleshooting
+
+    March 16, 2022
+
+     by Saran
+    Publish to Github Package Registry with Github Actions	
+    Publish to github releases and Github Package Registry with GitHub Actions
+
+    April 19, 2021
+
+     by Saran
+
+1 Response
+
+    Comments1
+    Pingbacks0
+
+    Robert Franz
+    January 12, 2023 at 5:23 pm	
+
+    Thanks for that useful tutorial. Gave me some hints I could use. Thanks and go on that way!
+    Reply
+
+Leave a Reply
+
+Comment *
+
+Name *
+
+Email *
+
+Website
+
+Notify me of followup comments via e-mail. You can also subscribe without commenting.
+
+ 
+
+    Next story 
+    10 reasons why you should use artifact repository manager
+    Previous story 
+    How to Build A Docker Image and Publish To Docker Hub with Github Actions
+
+Search for:
+Subscribe via email
+Email Address *
+Categories
+
+    CI CD
+    DevOps
+    Docker
+    Github Actions
+    Jenkins
+    Sonarqube
+
+    Terms and Conditions
+    Privacy Policy
+    Contact Us
+
+© 2023. All Rights Reserved.
+
+Powered by  - Designed with the Hueman theme

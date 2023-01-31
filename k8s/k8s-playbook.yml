@@ -1,7 +1,7 @@
 ---
 - name : "k8s auto build"
-  hosts: all
-  become: true
+  hosts: localhost
+  # become: true
   tasks:  
    - name: delete namespace ninja
      command: kubectl delete ns ninja
