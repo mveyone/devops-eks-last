@@ -26,7 +26,10 @@
         }
         stage('deploy to eks k8s'){
             steps{
-                   sh ' ansible-playbook k8s/k8s-playbook.yml'   
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.187'
+                    sh 'scp /var/lib/jenkins/workspace/devops-aws/*  ubuntu@10.0.1.187:/home/ubuntu'   
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.187  unzip -o devops-project-1.zip '
+                    // sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.187 ansible-playbook k8s/k8s-playbook.yml'   
                  }
         }
     }
