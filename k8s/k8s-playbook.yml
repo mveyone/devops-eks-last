@@ -15,14 +15,14 @@
    - name: deploy secret
      command: kubectl apply -f secret.yml
 
-   - name: deploy mongo.yml
+   - name: deploy mongo2.yml
      command: kubectl apply -f mongo.yml
 
    - name: deploy configmap
      command: kubectl apply -f configMap.yml
 
-  #  - name: deploy mongo-express
-  #    command: kubectl apply -f mongo-express.yml
+   - name: deploy mongo-express
+     command: kubectl apply -f mongo-express.yml
   
    - name: deploy k8s/nodejsApp
      command: kubectl apply -f nodejs.yml
