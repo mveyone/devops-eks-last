@@ -12,7 +12,7 @@ spec:
   storageClasseName: gp2
   resources:
     requests:
-      storage: 1Gi    #This will tell kubernetes about the amount of space we are trying to claim.
+      storage: 2Gi    #This will tell kubernetes about the amount of space we are trying to claim.
 ---
 apiVersion: apps/v1
 kind: Deployment
