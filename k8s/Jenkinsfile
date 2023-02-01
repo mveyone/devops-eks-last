@@ -11,34 +11,15 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        // stage ('k8s credentials'){
-        //   steps{
-        //       script{
-        //             kubernetesDeploy (configs: 'k8s/secret.yml',kubeconfigId: 'kubernetes')
-        //         }
-        //   }
-        // }
-        stage('deployment k8s') {
-            steps {
-              kubernetesDeploy (configs: 'k8s/k8s-playbook.yml',kubeconfigId: 'kubernetes',)
-              // sh 'sleep 10'
-              // kubernetesDeploy (configs: 'k8s/secret.yml',kubeconfigId: 'kubernetes',)
-              // sh 'sleep 10'
-              // kubernetesDeploy (configs: 'k8s/mongo.yml',kubeconfigId: 'kubernetes',)
-              // sh 'sleep 10'
-              // kubernetesDeploy (configs: 'k8s/configMap.yml',kubeconfigId: 'kubernetes',)
-              // sh 'sleep 10'
-              // kubernetesDeploy (configs: 'k8s/mongo-express.yml',kubeconfigId: 'kubernetes',)
-              // sh 'sleep 10'
-              // kubernetesDeploy (configs: 'k8s/nodejs.yml',kubeconfigId: 'kubernetes',)
-
-
-
-              // ansible-playbook k8s/k8s-playbook.yml
-                //   sh """
-                // ansible-playbook k8s/k8s-playbook.yml
-                // """
-            }
+        
+        stage('k8s'){
+          steps{
+          kubeconfig(credentialsId: 'k8s', serverUrl: '') {
+    // some block
+            sh"ansible-playbook k8s/k8s-playbook.yml"
+             }
+          }
         }
+        
   }
 }

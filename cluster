@@ -3,7 +3,7 @@ eksctl create cluster --region us-east-1 --name k8s-eks --nodegroup-name worker-
 
 eksctl create cluster --region us-east-1 --name k8s-eks --nodegroup-name worker-node  --nodes 1 --nodes-min 1 --nodes-max 1 --node-type t3.small --node-volume-size 30
 
-eksctl get cluster --name k8s-eks-demo --region us-east-1
+eksctl get cluster --name k8s-eks --region us-east-1
 
 kubectl get nodes
 
@@ -11,4 +11,4 @@ kubectl get ns
 
 aws eks update-kubeconfig --name k8s-eks
 
-eksctl delete cluster --name k8s-eks-demo --region us-east-1
+eksctl delete cluster --name k8s-eks --region us-east-1
