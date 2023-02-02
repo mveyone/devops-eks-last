@@ -53,7 +53,7 @@ spec:
       volumes:
         - name: mongodb-persistent-storage # Obtaining 'vloume' from PVC
           persistentVolumeClaim:
-            claimName: mongodb-pv-claim
+            claimName: ebs-claim
 ---
 apiVersion: v1
 kind: Service

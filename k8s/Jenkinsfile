@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
+  stages {
+        stage('Docker Login') {
+            steps {
+                // Add --password-stdin to run docker login command non-interactively
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        
+        stage('k8s'){
+          steps{
+          kubeconfig(credentialsId: 'k8s', serverUrl: '') {
+    // some block
+            sh"ansible-playbook k8s/k8s-playbook.yml"
+             }
+          }
+        }
+        
+  }
+}

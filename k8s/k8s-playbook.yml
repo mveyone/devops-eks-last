@@ -18,12 +18,16 @@
    - name: deploy configmap
      command: kubectl apply -f configMap.yml
 
-   - name: deploy pv 
-     command: kubectl apply -f pv.yml
+   - name: deploy storageclasse
+     command: kubectl apply -f storageclass.yml
+
+  #  - name: deploy pv 
+  #    command: kubectl apply -f pv.yml
 
    - name: deploy pvc
      command: kubectl apply -f pvc.yml
 
+   
    - name: deploy mongo2.yml
      command: kubectl apply -f mongo2.yml
 

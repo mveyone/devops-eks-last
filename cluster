@@ -12,3 +12,24 @@ kubectl get ns
 aws eks update-kubeconfig --name k8s-eks
 
 eksctl delete cluster --name k8s-eks --region us-east-1
+
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster k8s-eks \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_DriverRole
+
+  oidc_id=$(aws eks describe-cluster --name k8s-eks --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+  eksctl utils associate-iam-oidc-provider --cluster k8s-eks --approve
+
+  aws eks describe-addon-versions --addon-name aws-ebs-csi-driver
+
+
+eksctl create addon --name aws-ebs-csi-driver --cluster k8s-eks --service-account-role-arn arn:aws:iam::889671645712:role/AmazonEKS_EBS_CSI_DriverRole --force
+
+eksctl get addon --name aws-ebs-csi-driver --cluster k8s-eks
+
+https://docs.aws.amazon.com/fr_fr/eks/latest/userguide/ebs-sample-app.html
