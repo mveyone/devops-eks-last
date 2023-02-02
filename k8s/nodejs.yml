@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: mveyone/devops-aws:latest
+        image: mveyone/eks-k8s
         ports:
         - containerPort: 3000
         env:
