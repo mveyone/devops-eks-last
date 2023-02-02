@@ -1,0 +1,39 @@
+---
+- name : "k8s auto build"
+  hosts: localhost
+  # become: true
+  tasks:  
+   - name: delete deployment nodejsapp
+     command: kubectl delete -f nodejs.yml
+     ignore_errors: yes    
+
+  #  - name : apply nodejsapp.yml
+  #    command: kubectl apply -f k8s/nodejsapp.yml
+   - name: create new deployment nodejs
+     command: kubectl apply -f nodejs.yml
+   
+  #  - name: deploy secret
+  #    command: kubectl apply -f secret.yml
+
+  #  - name: deploy configmap
+  #    command: kubectl apply -f configMap.yml
+
+  #  - name: deploy storageclasse
+  #    command: kubectl apply -f storageclass.yml
+
+  # #  - name: deploy pv 
+  # #    command: kubectl apply -f pv.yml
+
+  #  - name: deploy pvc
+  #    command: kubectl apply -f pvc.yml
+
+   
+  #  - name: deploy mongo2.yml
+  #    command: kubectl apply -f mongo2.yml
+
+
+  #  - name: deploy mongo-express
+  #    command: kubectl apply -f mongo-express.yml
+  
+  #  - name: deploy k8s/nodejsApp
+  #    command: kubectl apply -f nodejs.yml
